@@ -1,6 +1,25 @@
+import React, { useState, useEffect } from 'react';
 import { Palette, TrendingUp, Trophy, Users, ArrowRight, Sparkles } from 'lucide-react';
 
 function App() {
+  // Toast state and handler
+  const [toast, setToast] = useState<{ visible: boolean; message: string }>({ visible: false, message: '' });
+
+  useEffect(() => {
+    let t: number | undefined;
+    if (toast.visible) {
+      t = window.setTimeout(() => setToast({ visible: false, message: '' }), 3000);
+    }
+    return () => {
+      if (t) clearTimeout(t);
+    };
+  }, [toast.visible]);
+
+  const showComingSoon = (e?: React.MouseEvent, msg = 'Coming soon!') => {
+    e?.preventDefault();
+    setToast({ visible: true, message: msg });
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-pink-50 via-purple-50 to-blue-50">
       <nav className="bg-white/80 backdrop-blur-md shadow-sm fixed w-full z-50">
@@ -14,12 +33,32 @@ function App() {
               <a href="#how-it-works" className="text-gray-700 hover:text-purple-600 transition-colors font-medium">How It Works</a>
               <a href="#community" className="text-gray-700 hover:text-purple-600 transition-colors font-medium">Community</a>
             </div>
-            <button className="bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 text-white px-6 py-2.5 rounded-full font-semibold hover:shadow-lg transform hover:scale-105 transition-all duration-200">
+            <button
+              onClick={(e) => showComingSoon(e)}
+              className="bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 text-white px-6 py-2.5 rounded-full font-semibold hover:shadow-lg transform hover:scale-105 transition-all duration-200"
+            >
               Get Started
             </button>
           </div>
         </div>
       </nav>
+
+      {/* Toast: simple info banner */}
+      {toast.visible && (
+        <div className="fixed top-24 left-1/2 transform -translate-x-1/2 z-60">
+          <div className="max-w-md bg-blue-50 border border-blue-200 text-blue-800 px-4 py-3 rounded-lg shadow-md flex items-center space-x-3">
+            <span className="inline-flex items-center justify-center w-8 h-8 bg-blue-100 text-blue-800 rounded-full font-semibold">i</span>
+            <div className="flex-1 text-sm">{toast.message}</div>
+            <button
+              onClick={() => setToast({ visible: false, message: '' })}
+              className="text-blue-600 hover:text-blue-800 font-bold px-2"
+              aria-label="Dismiss"
+            >
+              ×
+            </button>
+          </div>
+        </div>
+      )}
 
       <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
@@ -42,26 +81,32 @@ function App() {
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4">
-                <button className="bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 text-white px-8 py-4 rounded-full font-semibold text-lg hover:shadow-2xl transform hover:scale-105 transition-all duration-200 flex items-center justify-center space-x-2">
+                <button
+                  onClick={(e) => showComingSoon(e)}
+                  className="bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 text-white px-8 py-4 rounded-full font-semibold text-lg hover:shadow-2xl transform hover:scale-105 transition-all duration-200 flex items-center justify-center space-x-2"
+                >
                   <span>Start Creating</span>
                   <ArrowRight className="w-5 h-5" />
                 </button>
-                <button className="bg-white text-purple-600 px-8 py-4 rounded-full font-semibold text-lg hover:shadow-lg border-2 border-purple-200 hover:border-purple-400 transition-all duration-200">
+                <button
+                  onClick={(e) => showComingSoon(e)}
+                  className="bg-white text-purple-600 px-8 py-4 rounded-full font-semibold text-lg hover:shadow-lg border-2 border-purple-200 hover:border-purple-400 transition-all duration-200"
+                >
                   Explore Art
                 </button>
               </div>
 
               <div className="flex items-center space-x-8 pt-4">
                 <div>
-                  <div className="text-3xl font-bold text-purple-600">5000+</div>
+                  <div className="text-3xl font-bold text-purple-600">100+</div>
                   <div className="text-sm text-gray-600">Artists</div>
                 </div>
                 <div>
-                  <div className="text-3xl font-bold text-pink-600">10K+</div>
+                  <div className="text-3xl font-bold text-pink-600">100+</div>
                   <div className="text-sm text-gray-600">Artworks</div>
                 </div>
                 <div>
-                  <div className="text-3xl font-bold text-blue-600">500+</div>
+                  <div className="text-3xl font-bold text-blue-600">10+</div>
                   <div className="text-sm text-gray-600">Competitions</div>
                 </div>
               </div>
@@ -180,7 +225,10 @@ function App() {
           <p className="text-xl opacity-90">
             Be part of a movement that celebrates creativity, supports artists, and makes art accessible to everyone.
           </p>
-          <button className="bg-white text-purple-600 px-10 py-4 rounded-full font-semibold text-lg hover:shadow-2xl transform hover:scale-105 transition-all duration-200">
+          <button
+            onClick={(e) => showComingSoon(e)}
+            className="bg-white text-purple-600 px-10 py-4 rounded-full font-semibold text-lg hover:shadow-2xl transform hover:scale-105 transition-all duration-200"
+          >
             Join Now - It's Free!
           </button>
         </div>
@@ -212,14 +260,16 @@ function App() {
             <div>
               <h4 className="font-semibold mb-4">Connect</h4>
               <ul className="space-y-2 text-gray-400">
-                <li><a href="#" className="hover:text-white transition-colors">Instagram</a></li>
+                <li><a href="https://saralaufeyson.github.io/ArtopusIndia/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Our Card</a></li>
+                <li><a href="https://www.instagram.com/artopus_india/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Instagram</a></li>
                 <li><a href="#" className="hover:text-white transition-colors">Facebook</a></li>
                 <li><a href="#" className="hover:text-white transition-colors">Twitter</a></li>
+                
               </ul>
             </div>
           </div>
           <div className="border-t border-gray-800 pt-8 text-center text-gray-400">
-            <p>&copy; 2024 Artopus India. All rights reserved.</p>
+            <p>&copy; 2025 Artopus India. All rights reserved.</p>
           </div>
         </div>
       </footer>
