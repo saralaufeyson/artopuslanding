@@ -7,7 +7,7 @@ function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20">
             <div className="flex items-center space-x-3">
-              <img src="/Artopus india.png" alt="Artopus India" className="h-12 w-auto" />
+              <img src="/logo.ico" alt="Artopus India" className="h-12 w-auto" />
             </div>
             <div className="hidden md:flex space-x-8">
               <a href="#features" className="text-gray-700 hover:text-purple-600 transition-colors font-medium">Features</a>
@@ -70,7 +70,7 @@ function App() {
             <div className="relative">
               <div className="absolute inset-0 bg-gradient-to-r from-pink-400 via-purple-400 to-blue-400 rounded-3xl blur-3xl opacity-30 animate-pulse"></div>
               <div className="relative bg-white/60 backdrop-blur-md p-8 rounded-3xl shadow-2xl border border-white/50">
-                <img src="/Artopus india.png" alt="Artopus India" className="w-full h-auto" />
+                <img src="/logo.ico" alt="Artopus India" className="w-full h-auto" />
               </div>
             </div>
           </div>
@@ -190,7 +190,7 @@ function App() {
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-4 gap-8 mb-8">
             <div>
-              <img src="/Artopus india.png" alt="Artopus India" className="h-12 w-auto mb-4" />
+              <img src="/logo.ico" alt="Artopus India" className="h-12 w-auto mb-4" />
               <p className="text-gray-400">Empowering artists across India</p>
             </div>
             <div>
