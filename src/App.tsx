@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Palette, TrendingUp, Trophy, Users, ArrowRight, Sparkles, Moon, Sun } from 'lucide-react';
 import { PrivacyPolicy } from './pages/PrivacyPolicy';
 import { TermsOfService } from './pages/TermsOfService';
+import { OurCard } from './pages/OurCard';
 
-type Page = 'home' | 'privacy' | 'terms';
+type Page = 'home' | 'privacy' | 'terms' | 'card';
 
 function App() {
   const [currentPage, setCurrentPage] = useState<Page>('home');
@@ -53,6 +54,10 @@ function App() {
 
   if (currentPage === 'terms') {
     return <TermsOfService isDark={isDark} setIsDark={setIsDark} onBack={() => setCurrentPage('home')} />;
+  }
+
+  if (currentPage === 'card') {
+    return <OurCard isDark={isDark} setIsDark={setIsDark} onBack={() => setCurrentPage('home')} />;
   }
 
   return (
@@ -304,9 +309,9 @@ function App() {
             <div>
               <h4 className="font-semibold mb-4">Connect</h4>
               <ul className={`space-y-2 ${isDark ? 'text-gray-500 hover:text-gray-300' : 'text-gray-400'}`}>
-                <li><a href="https://saralaufeyson.github.io/ArtopusIndia/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Our Card</a></li>
+                <li><button onClick={() => setCurrentPage('card')} className="hover:text-white transition-colors text-left">Our Card</button></li>
                 <li><a href="https://www.instagram.com/artopus_india/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Instagram</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Facebook</a></li>
+                <li><a href="https://www.facebook.com/groups/artopusindia" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Facebook</a></li>
                 <li><a href="#" className="hover:text-white transition-colors">Twitter</a></li>
               </ul>
             </div>
