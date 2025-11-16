@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Palette, TrendingUp, Trophy, Users, ArrowRight, Sparkles, Moon, Sun } from 'lucide-react';
+import { PrivacyPolicy } from './pages/PrivacyPolicy';
+import { TermsOfService } from './pages/TermsOfService';
+
+type Page = 'home' | 'privacy' | 'terms';
 
 function App() {
+  const [currentPage, setCurrentPage] = useState<Page>('home');
   const [isDark, setIsDark] = useState(false);
   const [toast, setToast] = useState<{ visible: boolean; message: string }>({ visible: false, message: '' });
 
@@ -41,6 +46,14 @@ function App() {
       localStorage.setItem('theme', 'light');
     }
   };
+
+  if (currentPage === 'privacy') {
+    return <PrivacyPolicy isDark={isDark} setIsDark={setIsDark} onBack={() => setCurrentPage('home')} />;
+  }
+
+  if (currentPage === 'terms') {
+    return <TermsOfService isDark={isDark} setIsDark={setIsDark} onBack={() => setCurrentPage('home')} />;
+  }
 
   return (
     <div className={`min-h-screen transition-colors duration-300 ${isDark ? 'dark bg-gradient-to-br from-gray-950 via-purple-950 to-gray-900' : 'bg-gradient-to-br from-pink-50 via-purple-50 to-blue-50'}`}>
@@ -284,8 +297,8 @@ function App() {
               <h4 className="font-semibold mb-4">Support</h4>
               <ul className={`space-y-2 ${isDark ? 'text-gray-500 hover:text-gray-300' : 'text-gray-400'}`}>
                 <li><a href="#" className="hover:text-white transition-colors">Help Center</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Terms of Service</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Privacy Policy</a></li>
+                <li><button onClick={() => setCurrentPage('terms')} className="hover:text-white transition-colors text-left">Terms of Service</button></li>
+                <li><button onClick={() => setCurrentPage('privacy')} className="hover:text-white transition-colors text-left">Privacy Policy</button></li>
               </ul>
             </div>
             <div>
