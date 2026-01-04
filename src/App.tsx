@@ -10,6 +10,7 @@ function App() {
   const [currentPage, setCurrentPage] = useState<Page>('home');
   const [isDark, setIsDark] = useState(false);
   const [toast, setToast] = useState<{ visible: boolean; message: string }>({ visible: false, message: '' });
+  const [visitCount, setVisitCount] = useState<number>(0);
 
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme');
@@ -31,6 +32,39 @@ function App() {
       if (t) clearTimeout(t);
     };
   }, [toast.visible]);
+
+  useEffect(() => {
+    const incrementVisit = async () => {
+      try {
+        const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+        const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+
+        await fetch(`${supabaseUrl}/functions/v1/increment_visit`, {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${anonKey}`,
+          },
+        });
+
+        const response = await fetch(`${supabaseUrl}/rest/v1/visit_counter?select=total_visits`, {
+          method: 'GET',
+          headers: {
+            'apikey': anonKey,
+            'Authorization': `Bearer ${anonKey}`,
+          },
+        });
+
+        const data = await response.json();
+        if (data && data.length > 0) {
+          setVisitCount(data[0].total_visits);
+        }
+      } catch (err) {
+        console.error('Error updating visit count:', err);
+      }
+    };
+
+    incrementVisit();
+  }, []);
 
   const showComingSoon = (e?: React.MouseEvent, msg = 'Coming soon!') => {
     e?.preventDefault();
@@ -317,6 +351,9 @@ function App() {
           </div>
           <div className={`border-t pt-8 text-center ${isDark ? 'border-gray-800 text-gray-500' : 'border-gray-800 text-gray-400'}`}>
             <p>&copy; 2025 Artopus India. All rights reserved.</p>
+            <p className={`text-sm mt-3 ${isDark ? 'text-gray-600' : 'text-gray-500'}`}>
+              Visited by {visitCount.toLocaleString()} people since launch
+            </p>
           </div>
         </div>
       </footer>
