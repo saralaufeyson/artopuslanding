@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from 'react';
 import { Moon, Sun, ArrowLeft } from 'lucide-react';
 
 interface PrivacyPolicyProps {
